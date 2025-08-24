@@ -1,0 +1,42 @@
+{
+  "name": "monad-tx-game",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx hardhat test",
+    "compile": "npx hardhat compile",
+    "deploy": "npx hardhat run scripts/deploy-updated-nft.js",
+    "deploy:localhost": "npx hardhat run scripts/deploy-updated-nft.js --network localhost",
+    "deploy:monad": "npx hardhat run scripts/deploy-updated-nft.js --network monad",
+    "node": "npx hardhat node",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kenmori/monad-tx-game.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kenmori/monad-tx-game/issues"
+  },
+  "homepage": "https://github.com/kenmori/monad-tx-game#readme",
+  "description": "",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^6.1.0",
+    "@vitejs/plugin-react": "^5.0.1",
+    "hardhat": "^2.26.3",
+    "vite": "^7.1.3"
+  },
+  "dependencies": {
+    "@rainbow-me/rainbowkit": "^2.2.8",
+    "@tanstack/react-query": "^5.85.5",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "viem": "^2.34.0",
+    "wagmi": "^2.16.4"
+  }
+}

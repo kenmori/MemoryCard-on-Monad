@@ -6,6 +6,8 @@
 - Hardhat + Next.js プロジェクト作成
 - RainbowKit でウォレット接続確認
 - Linter 設定 (blome)
+- Phaser.js or Pixi.js（ゲームフレームワーク）
+- NodeはLTS
 
 **Tests**:
 - ローカルでウォレット接続成功
@@ -28,6 +30,8 @@
 **Success Criteria**:
 - カードを表示 → 10秒後に裏返す
 - ユーザーが候補リストからカードを選択可能
+- Next.jsのpublic/assets/cardsに画像がなければ、擬似的にDOMで作ってください。適当でいいです。あとでimgタグをそこに置換します
+
 **Tests**:
 - 表示タイマーが正しく動作
 - 正解/不正解の判定ができる
@@ -50,3 +54,6 @@
 - Leaderboard (ランキング)
 - 難易度調整オプション
 **Status**: Not Started
+
+## デプロイ
+- Vercel

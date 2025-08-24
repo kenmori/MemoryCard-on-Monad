@@ -1,0 +1,165 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #836ef9 0%, #a855f7 100%);
+  min-height: 100vh;
+}
+
+#root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 20px 40px rgba(131, 110, 249, 0.3);
+  text-align: center;
+  max-width: 800px;
+  width: 100%;
+}
+
+.game-header {
+  margin-bottom: 2rem;
+}
+
+.game-title {
+  color: #836ef9;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.game-stats {
+  display: flex;
+  justify-content: space-around;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 8px;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-bottom: 0.25rem;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #836ef9;
+}
+
+.start-button {
+  background: #836ef9;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 600;
+}
+
+.start-button:hover {
+  background: #7c3aed;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(131, 110, 249, 0.4);
+}
+
+.start-button:active {
+  transform: translateY(0);
+}
+
+.wallet-section {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: #f1f5f9;
+  border-radius: 12px;
+}
+
+.wallet-title {
+  color: #475569;
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+}
+
+.game-board {
+  display: grid;
+  gap: 1rem;
+  margin: 2rem 0;
+  justify-content: center;
+}
+
+.card {
+  width: 80px;
+  height: 80px;
+  background: #e2e8f0;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 2rem;
+}
+
+.card:hover {
+  border-color: #836ef9;
+  transform: scale(1.05);
+}
+
+.card.flipped {
+  background: #836ef9;
+  color: white;
+}
+
+.card.matched {
+  background: #10b981;
+  color: white;
+  cursor: not-allowed;
+}
+
+.timer {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #dc2626;
+  margin: 1rem 0;
+}
+
+@media (max-width: 768px) {
+  .game-title {
+    font-size: 2rem;
+  }
+  
+  .card {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
+  
+  .container {
+    padding: 1rem;
+  }
+}
