@@ -148,18 +148,123 @@ body {
   margin: 1rem 0;
 }
 
+.memory-game {
+  text-align: center;
+}
+
+.game-info {
+  margin: 1rem 0;
+  min-height: 60px;
+}
+
+.memorizing-phase {
+  background: #fee2e2;
+  border: 2px solid #fecaca;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.memorizing-phase .timer {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #dc2626;
+  margin-bottom: 0.5rem;
+}
+
+.playing-phase {
+  background: #eff6ff;
+  border: 2px solid #bfdbfe;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.playing-phase .game-stats {
+  display: flex;
+  justify-content: space-around;
+  font-weight: 600;
+  color: #1e40af;
+}
+
+.completed-phase {
+  background: #dcfce7;
+  border: 2px solid #bbf7d0;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.completed-phase h3 {
+  color: #166534;
+  margin-bottom: 0.5rem;
+}
+
+.completed-phase div {
+  color: #059669;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.card {
+  aspect-ratio: 1;
+  background: #e2e8f0;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.card:hover:not(.matched) {
+  border-color: #836ef9;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(131, 110, 249, 0.3);
+}
+
+.card.flipped {
+  background: #836ef9;
+  color: white;
+  border-color: #7c3aed;
+}
+
+.card.matched {
+  background: #10b981;
+  color: white;
+  border-color: #059669;
+  cursor: not-allowed;
+  animation: matchPulse 0.5s ease-in-out;
+}
+
+@keyframes matchPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
 @media (max-width: 768px) {
   .game-title {
     font-size: 2rem;
   }
   
   .card {
-    width: 60px;
-    height: 60px;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
   }
   
   .container {
     padding: 1rem;
+  }
+  
+  .playing-phase .game-stats {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .memorizing-phase .timer {
+    font-size: 1.25rem;
   }
 }
