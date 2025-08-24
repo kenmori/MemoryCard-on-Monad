@@ -12,7 +12,7 @@
 **Tests**:
 - ローカルでウォレット接続成功
 - Linter/formatter 実行でエラーなし
-**Status**: Not Started
+**Status**: Complete
 
 ## Stage 2: スマートコントラクト
 **Goal**: ゲーム進行を管理する基本コントラクト
@@ -23,7 +23,7 @@
 **Tests**:
 - ローカルテストでプレイヤーがレベルアップする
 - デプロイ確認
-**Status**: Not Started
+**Status**: Complete
 
 ## Stage 3: フロントエンド (ゲームUI 基本)
 **Goal**: 記憶ゲームのUI構築
@@ -35,7 +35,7 @@
 **Tests**:
 - 表示タイマーが正しく動作
 - 正解/不正解の判定ができる
-**Status**: Not Started
+**Status**: Complete
 
 ## Stage 4: フロントエンドとコントラクト統合
 **Goal**: UI と Blockchain を接続
@@ -45,7 +45,7 @@
 **Tests**:
 - ゲームをクリアすると on-chain 状態が更新される
 - 再読み込み後も進行状況を復元可能
-**Status**: Not Started
+**Status**: Complete
 
 ## Stage 5: 拡張機能 (任意)
 **Goal**: 将来の発展を見据えた拡張
@@ -53,7 +53,7 @@
 - NFT化したカード画像の利用
 - Leaderboard (ランキング)
 - 難易度調整オプション
-**Status**: Not Started
+**Status**: Complete
 
 ## デプロイ
 - Vercel
