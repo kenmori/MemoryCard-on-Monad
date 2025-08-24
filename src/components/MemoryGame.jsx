@@ -4,10 +4,10 @@ const CARD_SYMBOLS = ['🎮', '🚀', '💎', '⚡', '🎯', '🔥', '💫', '�
 
 const LEVEL_CONFIG = {
   1: { cards: 6, time: 5 },
-  2: { cards: 8, time: 5 }, 3: { cards: 8, time: 5 },
-  4: { cards: 10, time: 5 }, 5: { cards: 10, time: 5 }, 6: { cards: 10, time: 5 },
-  7: { cards: 12, time: 5 }, 8: { cards: 12, time: 5 }, 9: { cards: 12, time: 5 }, 10: { cards: 12, time: 5 },
-  11: { cards: 16, time: 5 }, 12: { cards: 16, time: 5 }, 13: { cards: 16, time: 5 }, 14: { cards: 16, time: 5 }, 15: { cards: 16, time: 5 },
+  2: { cards: 8, time: 4 }, 3: { cards: 8, time: 4 },
+  4: { cards: 10, time: 4 }, 5: { cards: 10, time: 3 }, 6: { cards: 10, time: 3 },
+  7: { cards: 12, time: 3 }, 8: { cards: 12, time: 3 }, 9: { cards: 12, time: 2 }, 10: { cards: 12, time: 2 },
+  11: { cards: 16, time: 2 }, 12: { cards: 16, time: 2 }, 13: { cards: 16, time: 1 }, 14: { cards: 16, time: 1 }, 15: { cards: 16, time: 1 },
 };
 
 function MemoryGame({ level = 1, onLevelComplete, onScoreUpdate, onSaveProgress }) {
@@ -101,8 +101,11 @@ function MemoryGame({ level = 1, onLevelComplete, onScoreUpdate, onSaveProgress 
         // Show congratulations when all pairs are matched
         if (newMatchedCards.length === cards.length) {
           setTimeout(() => {
-            setAnimationText('Congratulations🥳');
-            setShowNiceAnimation(true);
+            setShowNiceAnimation(false);
+            setTimeout(() => {
+              setAnimationText('Congratulations🥳');
+              setShowNiceAnimation(true);
+            }, 100);
           }, 600);
         }
         

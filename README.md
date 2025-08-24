@@ -188,12 +188,14 @@ npx vercel --prod
 
 | Level | Cards | Memory Time | Difficulty |
 |-------|-------|-------------|------------|
-| 1 | 4 (2 pairs) | 8 seconds | Easy |
-| 2-3 | 6 (3 pairs) | 7 seconds | Easy |
-| 4-6 | 8 (4 pairs) | 6 seconds | Medium |
-| 7-10 | 10 (5 pairs) | 5 seconds | Medium |
-| 11-15 | 12 (6 pairs) | 4 seconds | Hard |
-| 16+ | 16 (8 pairs) | 3 seconds | Expert |
+| 1 | 6 (3 pairs) | 5 seconds | Easy |
+| 2-3 | 8 (4 pairs) | 4 seconds | Easy |
+| 4 | 10 (5 pairs) | 4 seconds | Medium |
+| 5-6 | 10 (5 pairs) | 3 seconds | Medium |
+| 7-8 | 12 (6 pairs) | 3 seconds | Hard |
+| 9-10 | 12 (6 pairs) | 2 seconds | Hard |
+| 11-12 | 16 (8 pairs) | 2 seconds | Expert |
+| 13-15 | 16 (8 pairs) | 1 second | Expert |
 
 ## 🔧 Troubleshooting
 
