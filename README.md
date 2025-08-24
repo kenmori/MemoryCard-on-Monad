@@ -2,6 +2,9 @@
 
 A blockchain-powered memory card game built on Monad testnet with React and Hardhat.
 
+
+<img width="1073" height="377" alt="スクリーンショット 2025-08-01 20 59 06" src="https://github.com/user-attachments/assets/6a6d3697-25ff-4f03-a426-391b82dcd1f3" />
+
 ## 🎯 Game Features
 
 - **Memory Challenge**: Memorize card positions and match pairs
