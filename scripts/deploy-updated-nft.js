@@ -2,11 +2,18 @@ const { ethers } = require("hardhat");
 const { execSync } = require("child_process");
 
 async function main() {
-  const [deployer] = await ethers.getSigners();
+  const signers = await ethers.getSigners();
+  console.log("Available signers:", signers.length);
+  
+  if (signers.length === 0) {
+    throw new Error("No accounts available. Please check your PRIVATE_KEY environment variable.");
+  }
+  
+  const [deployer] = signers;
 
   console.log("🚀 Deploying MemoryGame contract...");
   console.log("📝 Deployer address:", deployer.address);
-  console.log("💰 Account balance:", ethers.formatEther(await ethers.provider.getBalance(deployer.address)), "ETH");
+  console.log("💰 Account balance:", ethers.formatEther(await ethers.provider.getBalance(deployer.address)), "MON");
   console.log("");
 
   const MemoryGame = await ethers.getContractFactory("MemoryGame");
