@@ -3,11 +3,11 @@ import { useState, useEffect } from 'react';
 const CARD_SYMBOLS = ['🎮', '🚀', '💎', '⚡', '🎯', '🔥', '💫', '🎪'];
 
 const LEVEL_CONFIG = {
-  1: { cards: 6, time: 5 },
-  2: { cards: 8, time: 4 }, 3: { cards: 8, time: 4 },
-  4: { cards: 10, time: 4 }, 5: { cards: 10, time: 3 }, 6: { cards: 10, time: 3 },
-  7: { cards: 12, time: 3 }, 8: { cards: 12, time: 3 }, 9: { cards: 12, time: 2 }, 10: { cards: 12, time: 2 },
-  11: { cards: 16, time: 2 }, 12: { cards: 16, time: 2 }, 13: { cards: 16, time: 1 }, 14: { cards: 16, time: 1 }, 15: { cards: 16, time: 1 },
+  1: { cards: 6, time: 5, maxMistakes: 5 },
+  2: { cards: 8, time: 5, maxMistakes: 6 }, 3: { cards: 8, time: 4, maxMistakes: 6 },
+  4: { cards: 10, time: 4, maxMistakes: 7 }, 5: { cards: 10, time: 4, maxMistakes: 7 }, 6: { cards: 10, time: 3, maxMistakes: 7 },
+  7: { cards: 12, time: 3, maxMistakes: 8 }, 8: { cards: 12, time: 3, maxMistakes: 8 }, 9: { cards: 12, time: 3, maxMistakes: 8 }, 10: { cards: 12, time: 2, maxMistakes: 8 },
+  11: { cards: 16, time: 2, maxMistakes: 10 }, 12: { cards: 16, time: 2, maxMistakes: 10 }, 13: { cards: 16, time: 2, maxMistakes: 10 }, 14: { cards: 16, time: 1, maxMistakes: 10 }, 15: { cards: 16, time: 1, maxMistakes: 10 },
 };
 
 function MemoryGame({ level = 1, onLevelComplete, onScoreUpdate, onSaveProgress }) {
@@ -21,11 +21,14 @@ function MemoryGame({ level = 1, onLevelComplete, onScoreUpdate, onSaveProgress 
   const [attempts, setAttempts] = useState(0);
   const [timer, setTimer] = useState(0);
   const [score, setScore] = useState(0);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [mistakes, setMistakes] = useState(0);
 
   const config = LEVEL_CONFIG[level] || { cards: 16, time: 5 };
   const gridCols = Math.ceil(Math.sqrt(config.cards));
 
   useEffect(() => {
+    console.log('Level changed to:', level);
     initializeGame();
   }, [level]);
 
@@ -66,6 +69,8 @@ function MemoryGame({ level = 1, onLevelComplete, onScoreUpdate, onSaveProgress 
     setAttempts(0);
     setScore(0);
     setTimer(config.time);
+    setIsProcessing(false);
+    setMistakes(0);
     
     // カードを設定した後、少し遅延してmemorizing状態に移行
     setTimeout(() => {
@@ -74,15 +79,25 @@ function MemoryGame({ level = 1, onLevelComplete, onScoreUpdate, onSaveProgress 
   };
 
   const handleCardClick = (cardId) => {
-    if (gameState !== 'playing' || flippedCards.length >= 2) return;
+    if (gameState !== 'playing') return;
     
     const card = cards.find(c => c.id === cardId);
     if (card.isMatched || flippedCards.includes(cardId)) return;
+    
+    // 既に2枚めくられている場合は、新しいペアを開始
+    if (flippedCards.length >= 2) {
+      if (isProcessing) return; // 処理中は新しいペアを開始できない
+      setFlippedCards([cardId]);
+      setIsProcessing(false);
+      return;
+    }
 
     const newFlippedCards = [...flippedCards, cardId];
     setFlippedCards(newFlippedCards);
 
     if (newFlippedCards.length === 2) {
+      // 2枚目をクリックした瞬間に処理をブロック
+      setIsProcessing(true);
       setAttempts(prev => prev + 1);
       
       const [firstId, secondId] = newFlippedCards;
@@ -117,16 +132,38 @@ function MemoryGame({ level = 1, onLevelComplete, onScoreUpdate, onSaveProgress 
         setTimeout(() => {
           setFlippedCards([]);
           setShowNiceAnimation(false);
+          // マッチした場合は500ms後に次のクリックを受け付ける（アニメーション考慮）
+          setTimeout(() => {
+            setIsProcessing(false);
+          }, 500);
           
           if (newMatchedCards.length === cards.length) {
             setGameState('completed');
-            onLevelComplete?.(newScore);
+            // 3秒後に自動で次のレベルに進む
+            setTimeout(() => {
+              onLevelComplete?.(newScore);
+            }, 3000);
           }
         }, newMatchedCards.length === cards.length ? 2000 : 1200);
       } else {
-        setTimeout(() => {
-          setFlippedCards([]);
-        }, 1000);
+        // マッチしなかった場合
+        const newMistakes = mistakes + 1;
+        setMistakes(newMistakes);
+        
+        // ゲームオーバーチェック
+        if (newMistakes >= config.maxMistakes) {
+          setTimeout(() => {
+            setFlippedCards([]);
+            setGameState('gameover');
+            setIsProcessing(false);
+          }, 300);
+        } else {
+          // 300ms後に素早く両方のカードを閉じる
+          setTimeout(() => {
+            setFlippedCards([]);
+            setIsProcessing(false); // 処理完了
+          }, 300);
+        }
       }
     }
   };
@@ -162,6 +199,7 @@ function MemoryGame({ level = 1, onLevelComplete, onScoreUpdate, onSaveProgress 
               <div>Attempts: {attempts}</div>
               <div>Score: {score}</div>
               <div>Remaining: {(config.cards - matchedCards.length) / 2} pairs</div>
+              <div style={{color: mistakes >= config.maxMistakes * 0.8 ? '#dc2626' : '#64748b'}}>Mistakes: {mistakes}/{config.maxMistakes}</div>
             </div>
             <button 
               className="back-to-menu-btn"
@@ -176,6 +214,21 @@ function MemoryGame({ level = 1, onLevelComplete, onScoreUpdate, onSaveProgress 
           <div className="completed-phase">
             <h3>Level {level} Complete!</h3>
             <div>Final Score: {score}</div>
+          </div>
+        )}
+        
+        {gameState === 'gameover' && (
+          <div className="gameover-phase">
+            <h3>Game Over!</h3>
+            <div>Too many mistakes on Level {level}</div>
+            <div>Final Score: {score}</div>
+            <button 
+              className="start-button" 
+              onClick={() => onSaveProgress?.(score)}
+              style={{ marginTop: '1rem' }}
+            >
+              Back to Menu
+            </button>
           </div>
         )}
       </div>
@@ -199,13 +252,9 @@ function MemoryGame({ level = 1, onLevelComplete, onScoreUpdate, onSaveProgress 
       </div>
 
       {gameState === 'completed' && (
-        <button 
-          className="start-button" 
-          onClick={() => onLevelComplete?.(score)}
-          style={{ marginTop: '1rem' }}
-        >
-          Next Level
-        </button>
+        <div style={{ marginTop: '1rem', fontSize: '1.25rem', color: '#10b981', fontWeight: '600' }}>
+          Preparing next level...
+        </div>
       )}
     </div>
   );

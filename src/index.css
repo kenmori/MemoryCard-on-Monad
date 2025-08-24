@@ -241,6 +241,26 @@ body {
   font-weight: 600;
 }
 
+.gameover-phase {
+  background: #fee2e2;
+  border: 2px solid #fecaca;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.gameover-phase h3 {
+  color: #dc2626;
+  margin-bottom: 0.5rem;
+}
+
+.gameover-phase div {
+  color: #991b1b;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
 .card {
   aspect-ratio: 1;
   background: #e2e8f0;

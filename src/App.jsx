@@ -14,11 +14,12 @@ function App() {
   const { playerData, isConnected, isPlayerRegistered } = useMemoryGameContract();
 
   useEffect(() => {
-    if (playerData && isConnected) {
+    if (playerData && isConnected && gameState === 'menu') {
+      console.log('Loading player data - level:', playerData.level, 'bestScore:', playerData.bestScore);
       setLevel(playerData.level);
       setBestScore(playerData.bestScore);
     }
-  }, [playerData, isConnected]);
+  }, [playerData, isConnected, gameState]);
 
   const startGame = () => {
     setGameState('playing');
@@ -27,6 +28,7 @@ function App() {
   };
 
   const handleLevelComplete = (levelScore) => {
+    console.log('Level complete called with score:', levelScore);
     const newTotalScore = totalScore + levelScore;
     setTotalScore(newTotalScore);
     
@@ -34,7 +36,9 @@ function App() {
       setBestScore(newTotalScore);
     }
     
-    setLevel(prev => prev + 1);
+    const nextLevel = level + 1;
+    console.log('Setting level to:', nextLevel);
+    setLevel(nextLevel);
   };
 
   const handleScoreUpdate = (currentLevelScore) => {
