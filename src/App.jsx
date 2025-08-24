@@ -41,12 +41,8 @@ function App() {
     // スコア更新の処理（必要に応じて）
   };
 
-  const backToMenu = () => {
-    if (isConnected && totalScore > 0) {
-      setShowSaveModal(true);
-    } else {
-      setGameState('menu');
-    }
+  const handleSaveProgress = (currentScore) => {
+    setShowSaveModal(true);
   };
 
   const handleSaveComplete = () => {
@@ -63,21 +59,6 @@ function App() {
       <div className="container">
         <div className="game-header">
           <h1 className="game-title">Monad Memory Game</h1>
-          <button 
-            className="back-button" 
-            onClick={backToMenu}
-            style={{
-              background: '#6b7280',
-              color: 'white',
-              border: 'none',
-              padding: '0.5rem 1rem',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              marginBottom: '1rem'
-            }}
-          >
-            メニューに戻る
-          </button>
         </div>
         
         <div className="game-stats">
@@ -99,6 +80,7 @@ function App() {
           level={level}
           onLevelComplete={handleLevelComplete}
           onScoreUpdate={handleScoreUpdate}
+          onSaveProgress={handleSaveProgress}
         />
         
         <SaveProgressModal 
@@ -116,6 +98,18 @@ function App() {
     <div className="container">
       <div className="game-header">
         <h1 className="game-title">Monad Memory Game</h1>
+        
+        <div className="game-instructions">
+          <h3>How to Play</h3>
+          <ul>
+            <li>📝 Memorize card positions during the 5-second countdown</li>
+            <li>🔄 Flip cards to find matching pairs (starts with 6 cards)</li>
+            <li>💯 Earn +100 points for each successful match</li>
+            <li>💾 Save your progress on-chain for 0.01 MON</li>
+            <li>🎯 Complete all pairs to advance to the next level</li>
+          </ul>
+        </div>
+        
         <div className="wallet-section">
           <h2 className="wallet-title">Connect Your Wallet</h2>
           <ConnectButton />

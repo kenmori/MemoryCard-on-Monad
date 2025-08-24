@@ -33,34 +33,34 @@ function SaveProgressModal({ isOpen, onClose, score, level, onSaveComplete }) {
     <div className="modal-overlay">
       <div className="modal">
         <div className="modal-header">
-          <h3>進行状況を保存しますか？</h3>
+          <h3>Save Your Progress?</h3>
         </div>
         
         <div className="modal-body">
           <div className="save-info">
             <div className="current-progress">
-              <p><strong>現在のレベル:</strong> {level}</p>
-              <p><strong>現在のスコア:</strong> {score}</p>
+              <p><strong>Current Level:</strong> {level}</p>
+              <p><strong>Current Score:</strong> {score}</p>
               {playerData && (
                 <>
-                  <p><strong>最高スコア:</strong> {playerData.bestScore}</p>
-                  <p><strong>保存済みレベル:</strong> {playerData.level}</p>
+                  <p><strong>Best Score:</strong> {playerData.bestScore}</p>
+                  <p><strong>Saved Level:</strong> {playerData.level}</p>
                 </>
               )}
             </div>
             
             <div className="cost-info">
-              <p>💎 保存には <strong>0.01 MON</strong> が必要です</p>
+              <p>💎 Saving requires <strong>0.01 MON</strong></p>
               <p className="cost-description">
-                進行状況をブロックチェーンに保存することで、
-                いつでも続きからプレイできます。
+                Save your progress on-chain to continue 
+                your game anytime from any device.
               </p>
             </div>
           </div>
 
           {writeError && (
             <div className="error-message">
-              エラー: {writeError.message}
+              Error: {writeError.message}
             </div>
           )}
         </div>
@@ -71,14 +71,14 @@ function SaveProgressModal({ isOpen, onClose, score, level, onSaveComplete }) {
             onClick={handleSkip}
             disabled={isSaving || isWritePending}
           >
-            スキップ
+            Skip
           </button>
           <button 
             className="modal-button primary" 
             onClick={handleSave}
             disabled={isSaving || isWritePending}
           >
-            {isSaving || isWritePending ? '保存中...' : '保存 (0.01 MON)'}
+            {isSaving || isWritePending ? 'Saving...' : 'Save (0.01 MON)'}
           </button>
         </div>
       </div>
