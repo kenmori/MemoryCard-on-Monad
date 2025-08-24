@@ -22,7 +22,7 @@ import {
 } from "@tanstack/react-query";
 
 const monadTestnet = {
-  id: 41454,
+  id: 10143,
   name: 'Monad Testnet',
   nativeCurrency: {
     decimals: 18,
@@ -30,18 +30,18 @@ const monadTestnet = {
     symbol: 'MON',
   },
   rpcUrls: {
-    public: { http: ['https://testnet1.monad.xyz'] },
-    default: { http: ['https://testnet1.monad.xyz'] },
+    public: { http: ['https://testnet-rpc.monad.xyz'] },
+    default: { http: ['https://testnet-rpc.monad.xyz'] },
   },
   blockExplorers: {
-    default: { name: 'Monad Explorer', url: 'https://testnet1.monad.xyz' },
+    default: { name: 'Monad Explorer', url: 'https://explorer.monad.xyz' },
   },
 };
 
 const config = getDefaultConfig({
-  appName: 'Monad Memory Game',
+  appName: 'Monad Memory Card Game',
   projectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || 'YOUR_PROJECT_ID',
-  chains: [mainnet, polygon, optimism, arbitrum, base, monadTestnet],
+  chains: [monadTestnet],
   ssr: false,
 });
 
