@@ -55,5 +55,9 @@
 - 難易度調整オプション
 **Status**: Complete
 
-## デプロイ
-- Vercel
+## Stage 6: デプロイ環境
+**Goal**: Vercelでデプロイできること
+**Ideas**:
+- 環境変数の用意
+- Vercelファイルの用意
+- ビルド、デプロイ、開発方法をREADME.mdに記載

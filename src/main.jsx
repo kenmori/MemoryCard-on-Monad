@@ -40,9 +40,9 @@ const monadTestnet = {
 
 const config = getDefaultConfig({
   appName: 'Monad Memory Game',
-  projectId: 'YOUR_PROJECT_ID', // Get one at https://cloud.walletconnect.com
+  projectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || 'YOUR_PROJECT_ID',
   chains: [mainnet, polygon, optimism, arbitrum, base, monadTestnet],
-  ssr: false, // If your dApp uses server side rendering (SSR)
+  ssr: false,
 });
 
 const queryClient = new QueryClient();

@@ -17,14 +17,14 @@
     "type": "git",
     "url": "git+https://github.com/kenmori/monad-tx-game.git"
   },
-  "keywords": [],
+  "keywords": ["blockchain", "game", "memory", "monad", "web3", "hardhat", "react", "solidity"],
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/kenmori/monad-tx-game/issues"
   },
   "homepage": "https://github.com/kenmori/monad-tx-game#readme",
-  "description": "",
+  "description": "A blockchain-powered memory card game built on Monad testnet with React and Hardhat",
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.1.0",
     "@nomicfoundation/hardhat-ethers": "^3.1.0",

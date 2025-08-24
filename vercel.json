@@ -1,0 +1,11 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "vite",
+  "env": {
+    "VITE_MEMORY_GAME_CONTRACT_ADDRESS": "@memory_game_contract_address",
+    "VITE_WALLETCONNECT_PROJECT_ID": "@walletconnect_project_id"
+  }
+}
