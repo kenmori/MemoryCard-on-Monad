@@ -126,12 +126,14 @@ npx vercel --prod
 ## 🎮 How to Play
 
 1. **Connect Wallet**: Use RainbowKit to connect your Monad testnet wallet
-2. **Start Game**: Click "Start Game" to begin
-3. **Memorize**: Watch cards flip over during countdown
+2. **Start Game**: Click "Start Game" to begin (you have 3 mistakes for the entire game)
+3. **Memorize**: Study card positions during the countdown (5 seconds initially)
 4. **Match Pairs**: Click cards to find matching pairs
-5. **Score Points**: Earn more points for fewer attempts
-6. **Save Progress**: Pay 0.01 MON to save your progress on-chain
-7. **Level Up**: Complete all pairs to advance to the next level
+5. **Avoid Mistakes**: You can only make 3 wrong matches total - 4th mistake ends the game
+6. **Score Points**: Earn +100 points for each successful match
+7. **Progress Through Levels**: Complete all pairs to advance (mistakes carry over)
+8. **Save Progress**: Pay 0.01 MON to save your progress and score on-chain
+9. **Challenge**: Memory time decreases and card count increases as you advance
 
 ## 🏗️ Architecture
 
@@ -184,18 +186,26 @@ npx vercel --prod
 | `VITE_WALLETCONNECT_PROJECT_ID` | WalletConnect project ID | Yes |
 | `PRIVATE_KEY` | Deployment private key | Development only |
 
+## 🎯 Game Rules
+
+- **Mistake Limit**: You can make up to **3 mistakes** throughout the entire game
+- **Game Over**: 4th mistake ends the game and resets progress
+- **Level Progression**: Mistakes accumulate across all levels (no reset between levels)
+- **Scoring**: +100 points per successful match
+- **Memory Phase**: Fixed time to memorize card positions before they flip
+
 ## 🎨 Game Levels
 
-| Level | Cards | Memory Time | Difficulty |
-|-------|-------|-------------|------------|
-| 1 | 6 (3 pairs) | 5 seconds | Easy |
-| 2-3 | 8 (4 pairs) | 4 seconds | Easy |
-| 4 | 10 (5 pairs) | 4 seconds | Medium |
-| 5-6 | 10 (5 pairs) | 3 seconds | Medium |
-| 7-8 | 12 (6 pairs) | 3 seconds | Hard |
-| 9-10 | 12 (6 pairs) | 2 seconds | Hard |
-| 11-12 | 16 (8 pairs) | 2 seconds | Expert |
-| 13-15 | 16 (8 pairs) | 1 second | Expert |
+| Level | Cards | Memory Time | Mistakes Allowed | Difficulty |
+|-------|-------|-------------|------------------|------------|
+| 1 | 6 (3 pairs) | 5 seconds | 3 total | Easy |
+| 2-3 | 8 (4 pairs) | 5-4 seconds | 3 total | Easy |
+| 4-5 | 10 (5 pairs) | 4 seconds | 3 total | Medium |
+| 6 | 10 (5 pairs) | 3 seconds | 3 total | Medium |
+| 7-9 | 12 (6 pairs) | 3 seconds | 3 total | Hard |
+| 10 | 12 (6 pairs) | 2 seconds | 3 total | Hard |
+| 11-13 | 16 (8 pairs) | 2 seconds | 3 total | Expert |
+| 14-15+ | 16 (8 pairs) | 1 second | 3 total | Expert |
 
 ## 🔧 Troubleshooting
 

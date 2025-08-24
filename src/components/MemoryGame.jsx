@@ -3,14 +3,14 @@ import { useState, useEffect } from 'react';
 const CARD_SYMBOLS = ['🎮', '🚀', '💎', '⚡', '🎯', '🔥', '💫', '🎪'];
 
 const LEVEL_CONFIG = {
-  1: { cards: 6, time: 5, maxMistakes: 5 },
-  2: { cards: 8, time: 5, maxMistakes: 6 }, 3: { cards: 8, time: 4, maxMistakes: 6 },
-  4: { cards: 10, time: 4, maxMistakes: 7 }, 5: { cards: 10, time: 4, maxMistakes: 7 }, 6: { cards: 10, time: 3, maxMistakes: 7 },
-  7: { cards: 12, time: 3, maxMistakes: 8 }, 8: { cards: 12, time: 3, maxMistakes: 8 }, 9: { cards: 12, time: 3, maxMistakes: 8 }, 10: { cards: 12, time: 2, maxMistakes: 8 },
-  11: { cards: 16, time: 2, maxMistakes: 10 }, 12: { cards: 16, time: 2, maxMistakes: 10 }, 13: { cards: 16, time: 2, maxMistakes: 10 }, 14: { cards: 16, time: 1, maxMistakes: 10 }, 15: { cards: 16, time: 1, maxMistakes: 10 },
+  1: { cards: 6, time: 5, maxMistakes: 3 },
+  2: { cards: 8, time: 5, maxMistakes: 3 }, 3: { cards: 8, time: 4, maxMistakes: 3 },
+  4: { cards: 10, time: 4, maxMistakes: 3 }, 5: { cards: 10, time: 4, maxMistakes: 3 }, 6: { cards: 10, time: 3, maxMistakes: 3 },
+  7: { cards: 12, time: 3, maxMistakes: 3 }, 8: { cards: 12, time: 3, maxMistakes: 3 }, 9: { cards: 12, time: 3, maxMistakes: 3 }, 10: { cards: 12, time: 2, maxMistakes: 3 },
+  11: { cards: 16, time: 2, maxMistakes: 3 }, 12: { cards: 16, time: 2, maxMistakes: 3 }, 13: { cards: 16, time: 2, maxMistakes: 3 }, 14: { cards: 16, time: 1, maxMistakes: 3 }, 15: { cards: 16, time: 1, maxMistakes: 3 },
 };
 
-function MemoryGame({ level = 1, onLevelComplete, onScoreUpdate, onSaveProgress }) {
+function MemoryGame({ level = 1, onLevelComplete, onScoreUpdate, onSaveProgress, isNewGame = false }) {
   const [gameState, setGameState] = useState('memorizing'); // memorizing, playing, completed
   const [cards, setCards] = useState([]);
   const [flippedCards, setFlippedCards] = useState([]);
@@ -30,6 +30,11 @@ function MemoryGame({ level = 1, onLevelComplete, onScoreUpdate, onSaveProgress 
   useEffect(() => {
     console.log('Level changed to:', level);
     initializeGame();
+    
+    // 新しいゲーム開始時のみ間違い回数をリセット
+    if (level === 1) {
+      setMistakes(0);
+    }
   }, [level]);
 
   useEffect(() => {
@@ -70,7 +75,7 @@ function MemoryGame({ level = 1, onLevelComplete, onScoreUpdate, onSaveProgress 
     setScore(0);
     setTimer(config.time);
     setIsProcessing(false);
-    setMistakes(0);
+    // setMistakes(0); を削除 - 間違い回数はリセットしない
     
     // カードを設定した後、少し遅延してmemorizing状態に移行
     setTimeout(() => {
