@@ -1,12 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import MemoryGame from './components/MemoryGame';
+import SaveProgressModal from './components/SaveProgressModal';
+import { useMemoryGameContract } from './hooks/useMemoryGameContract';
 
 function App() {
   const [gameState, setGameState] = useState('menu'); // menu, playing
   const [level, setLevel] = useState(1);
   const [totalScore, setTotalScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  
+  const { playerData, isConnected, isPlayerRegistered } = useMemoryGameContract();
+
+  useEffect(() => {
+    if (playerData && isConnected) {
+      setLevel(playerData.level);
+      setBestScore(playerData.bestScore);
+    }
+  }, [playerData, isConnected]);
 
   const startGame = () => {
     setGameState('playing');
@@ -30,6 +42,19 @@ function App() {
   };
 
   const backToMenu = () => {
+    if (isConnected && totalScore > 0) {
+      setShowSaveModal(true);
+    } else {
+      setGameState('menu');
+    }
+  };
+
+  const handleSaveComplete = () => {
+    setGameState('menu');
+  };
+
+  const handleModalClose = () => {
+    setShowSaveModal(false);
     setGameState('menu');
   };
 
@@ -74,6 +99,14 @@ function App() {
           level={level}
           onLevelComplete={handleLevelComplete}
           onScoreUpdate={handleScoreUpdate}
+        />
+        
+        <SaveProgressModal 
+          isOpen={showSaveModal}
+          onClose={handleModalClose}
+          score={totalScore}
+          level={level}
+          onSaveComplete={handleSaveComplete}
         />
       </div>
     );
