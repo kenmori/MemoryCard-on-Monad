@@ -76,7 +76,8 @@ export function useMemoryGameContract() {
     playerData: playerData ? {
       level: Number(playerData[0]),
       score: Number(playerData[1]),
-      bestScore: Number(playerData[2])
+      bestScore: Number(playerData[2]),
+      lastPlayedAt: Number(playerData[3])
     } : null,
     
     isPlayerRegistered: playerExists ? playerExists[3] : false,

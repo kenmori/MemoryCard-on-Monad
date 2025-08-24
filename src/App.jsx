@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import MemoryGame from './components/MemoryGame';
 import SaveProgressModal from './components/SaveProgressModal';
+import Leaderboard from './components/Leaderboard';
 import { useMemoryGameContract } from './hooks/useMemoryGameContract';
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
   const [totalScore, setTotalScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
   const [showSaveModal, setShowSaveModal] = useState(false);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
   
   const { playerData, isConnected, isPlayerRegistered } = useMemoryGameContract();
 
@@ -62,7 +64,15 @@ function App() {
     return (
       <div className="container">
         <div className="game-header">
-          <h1 className="game-title">Monad Memory Card Game</h1>
+          <div className="title-container">
+            <div className="monad-logo">
+              <img src="/monad_logo.png" alt="Monad Logo" width="35" height="35" />
+            </div>
+            <h1 className="game-title">Monad Memory Card Game</h1>
+            <div className="monad-logo">
+              <img src="/monad_logo.png" alt="Monad Logo" width="35" height="35" />
+            </div>
+          </div>
         </div>
         
         <div className="game-stats">
@@ -101,7 +111,15 @@ function App() {
   return (
     <div className="container">
       <div className="game-header">
-        <h1 className="game-title">Monad Memory Card Game</h1>
+        <div className="title-container">
+          <div className="monad-logo">
+            <img src="/monad_logo.png" alt="Monad Logo" width="40" height="40" />
+          </div>
+          <h1 className="game-title">Monad Memory Card Game</h1>
+          <div className="monad-logo">
+            <img src="/monad_logo.png" alt="Monad Logo" width="40" height="40" />
+          </div>
+        </div>
         <div className="game-instructions">
           <h3>How to Play</h3>
           <ul>
@@ -133,9 +151,22 @@ function App() {
         </div>
       </div>
 
-      <button className="start-button" onClick={startGame}>
-        Start Game
-      </button>
+      <div className="menu-buttons">
+        <button className="start-button" onClick={startGame}>
+          Start Game
+        </button>
+        <button 
+          className="leaderboard-button" 
+          onClick={() => setShowLeaderboard(true)}
+        >
+          🏆 Leaderboard
+        </button>
+      </div>
+      
+      <Leaderboard 
+        isOpen={showLeaderboard}
+        onClose={() => setShowLeaderboard(false)}
+      />
     </div>
   );
 }

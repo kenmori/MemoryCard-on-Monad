@@ -6,6 +6,7 @@ contract MemoryGame {
         uint256 level;
         uint256 score;
         uint256 bestScore;
+        uint256 lastPlayedAt;
         bool exists;
     }
     
@@ -28,6 +29,7 @@ contract MemoryGame {
             level: 1,
             score: 0,
             bestScore: 0,
+            lastPlayedAt: block.timestamp,
             exists: true
         });
         
@@ -41,6 +43,7 @@ contract MemoryGame {
         
         Player storage player = players[msg.sender];
         player.score = _score;
+        player.lastPlayedAt = block.timestamp;
         
         if (_score > player.bestScore) {
             player.bestScore = _score;
@@ -62,21 +65,23 @@ contract MemoryGame {
         return (player.level, player.score, player.bestScore);
     }
     
-    function getCurrentPlayer() external view returns (uint256 level, uint256 score, uint256 bestScore) {
+    function getCurrentPlayer() external view returns (uint256 level, uint256 score, uint256 bestScore, uint256 lastPlayedAt) {
         require(players[msg.sender].exists, "Player not registered");
         Player memory player = players[msg.sender];
-        return (player.level, player.score, player.bestScore);
+        return (player.level, player.score, player.bestScore, player.lastPlayedAt);
     }
     
     function getPlayerCount() external view returns (uint256) {
         return playerAddresses.length;
     }
     
-    function getLeaderboard(uint256 _limit) external view returns (address[] memory addresses, uint256[] memory scores) {
+    function getLeaderboard(uint256 _limit) external view returns (address[] memory addresses, uint256[] memory levels, uint256[] memory scores, uint256[] memory timestamps) {
         uint256 limit = _limit > playerAddresses.length ? playerAddresses.length : _limit;
         
         addresses = new address[](limit);
+        levels = new uint256[](limit);
         scores = new uint256[](limit);
+        timestamps = new uint256[](limit);
         
         address[] memory sortedAddresses = new address[](playerAddresses.length);
         for (uint256 i = 0; i < playerAddresses.length; i++) {
@@ -95,10 +100,12 @@ contract MemoryGame {
         
         for (uint256 i = 0; i < limit; i++) {
             addresses[i] = sortedAddresses[i];
+            levels[i] = players[sortedAddresses[i]].level;
             scores[i] = players[sortedAddresses[i]].bestScore;
+            timestamps[i] = players[sortedAddresses[i]].lastPlayedAt;
         }
         
-        return (addresses, scores);
+        return (addresses, levels, scores, timestamps);
     }
     
     function withdraw() external {
