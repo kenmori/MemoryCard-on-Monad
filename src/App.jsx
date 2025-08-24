@@ -58,7 +58,7 @@ function App() {
     return (
       <div className="container">
         <div className="game-header">
-          <h1 className="game-title">Monad Memory Game</h1>
+          <h1 className="game-title">Monad Memory Card Game</h1>
         </div>
         
         <div className="game-stats">
@@ -97,8 +97,7 @@ function App() {
   return (
     <div className="container">
       <div className="game-header">
-        <h1 className="game-title">Monad Memory Game</h1>
-        
+        <h1 className="game-title">Monad Memory Card Game</h1>
         <div className="game-instructions">
           <h3>How to Play</h3>
           <ul>
@@ -109,13 +108,12 @@ function App() {
             <li>🎯 Complete all pairs to advance to the next level</li>
           </ul>
         </div>
-        
         <div className="wallet-section">
           <h2 className="wallet-title">Connect Your Wallet</h2>
           <ConnectButton />
         </div>
       </div>
-      
+
       <div className="game-stats">
         <div className="stat">
           <div className="stat-label">Level</div>
