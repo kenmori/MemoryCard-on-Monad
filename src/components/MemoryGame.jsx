@@ -31,15 +31,23 @@ function MemoryGame({ level = 1, onLevelComplete, onScoreUpdate, onSaveProgress 
 
   useEffect(() => {
     let interval;
-    if (gameState === 'memorizing' && timer > 0) {
-      interval = setInterval(() => {
-        setTimer(prev => prev - 1);
-      }, 1000);
-    } else if (gameState === 'memorizing' && timer === 0) {
-      setGameState('playing');
+    if (gameState === 'memorizing') {
+      if (timer > 0) {
+        interval = setInterval(() => {
+          setTimer(prev => {
+            if (prev <= 1) {
+              setGameState('playing');
+              return 0;
+            }
+            return prev - 1;
+          });
+        }, 1000);
+      } else if (timer === 0) {
+        setGameState('playing');
+      }
     }
     return () => clearInterval(interval);
-  }, [timer, gameState]);
+  }, [gameState, timer]);
 
   const initializeGame = () => {
     const numPairs = config.cards / 2;
@@ -56,9 +64,13 @@ function MemoryGame({ level = 1, onLevelComplete, onScoreUpdate, onSaveProgress 
     setFloatingCards([]);
     setShowNiceAnimation(false);
     setAttempts(0);
-    setGameState('memorizing');
-    setTimer(config.time);
     setScore(0);
+    setTimer(config.time);
+    
+    // カードを設定した後、少し遅延してmemorizing状態に移行
+    setTimeout(() => {
+      setGameState('memorizing');
+    }, 100);
   };
 
   const handleCardClick = (cardId) => {
