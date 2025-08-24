@@ -1,9 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMemoryGameContract } from '../hooks/useMemoryGameContract';
 
 function SaveProgressModal({ isOpen, onClose, score, level, onSaveComplete }) {
   const [isSaving, setIsSaving] = useState(false);
-  const { updateProgress, isPlayerRegistered, registerPlayer, playerData, isWritePending, writeError } = useMemoryGameContract();
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const { 
+    updateProgress, 
+    isPlayerRegistered, 
+    registerPlayer, 
+    playerData, 
+    isWritePending, 
+    writeError,
+    isTransactionLoading,
+    isTransactionSuccess 
+  } = useMemoryGameContract();
+
+  // トランザクション成功を監視
+  useEffect(() => {
+    if (isTransactionSuccess && isSaving) {
+      // トランザクション成功トースト表示
+      setShowSuccessToast(true);
+      setTimeout(() => {
+        setShowSuccessToast(false);
+        onSaveComplete?.();
+        onClose();
+        setIsSaving(false);
+      }, 2000);
+    }
+  }, [isTransactionSuccess, isSaving, onSaveComplete, onClose]);
 
   const handleSave = async () => {
     try {
@@ -14,11 +38,9 @@ function SaveProgressModal({ isOpen, onClose, score, level, onSaveComplete }) {
       }
       
       await updateProgress(score);
-      onSaveComplete?.();
-      onClose();
+      // トランザクション完了はuseEffectで監視
     } catch (error) {
       console.error('Error saving progress:', error);
-    } finally {
       setIsSaving(false);
     }
   };
@@ -30,11 +52,17 @@ function SaveProgressModal({ isOpen, onClose, score, level, onSaveComplete }) {
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal">
-        <div className="modal-header">
-          <h3>Save Your Progress?</h3>
+    <>
+      {showSuccessToast && (
+        <div className="success-toast">
+          ✅ Transaction Successful! Progress Saved 💾
         </div>
+      )}
+      <div className="modal-overlay">
+        <div className="modal">
+          <div className="modal-header">
+            <h3>{showSuccessToast ? 'Progress Saved!' : 'Save Your Progress?'}</h3>
+          </div>
         
         <div className="modal-body">
           <div className="save-info">
@@ -78,11 +106,14 @@ function SaveProgressModal({ isOpen, onClose, score, level, onSaveComplete }) {
             onClick={handleSave}
             disabled={isSaving || isWritePending}
           >
-            {isSaving || isWritePending ? 'Saving...' : 'Save (0.01 MON)'}
+{isSaving || isWritePending || isTransactionLoading ? 
+              (isTransactionLoading ? 'Confirming...' : 'Saving...') : 
+              'Save (0.01 MON)'}
           </button>
         </div>
       </div>
     </div>
+    </>
   );
 }
 
