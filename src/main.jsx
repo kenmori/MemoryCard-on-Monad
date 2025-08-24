@@ -26,16 +26,21 @@ const monadTestnet = {
   name: 'Monad Testnet',
   nativeCurrency: {
     decimals: 18,
-    name: 'MON',
+    name: 'Monad',
     symbol: 'MON',
   },
   rpcUrls: {
-    public: { http: ['https://testnet-rpc.monad.xyz'] },
-    default: { http: ['https://testnet-rpc.monad.xyz'] },
+    default: {
+      http: ['https://testnet-rpc.monad.xyz'],
+    },
   },
   blockExplorers: {
-    default: { name: 'Monad Explorer', url: 'https://explorer.monad.xyz' },
+    default: {
+      name: 'Monad Explorer',
+      url: 'https://testnet.monadexplorer.com',
+    },
   },
+  testnet: true,
 };
 
 const config = getDefaultConfig({
