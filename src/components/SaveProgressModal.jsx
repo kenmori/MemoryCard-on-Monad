@@ -78,9 +78,9 @@ function SaveProgressModal({ isOpen, onClose, score, level, onSaveComplete }) {
             </div>
             
             <div className="cost-info">
-              <p>💎 Saving requires <strong>0.01 MON</strong></p>
+              <p>💎 Saving requires <strong>0.01 MON + gas</strong></p>
               <p className="cost-description">
-                Save your progress on-chain to continue 
+                Save your progress on-chain to continue
                 your game anytime from any device.
               </p>
             </div>
@@ -108,7 +108,7 @@ function SaveProgressModal({ isOpen, onClose, score, level, onSaveComplete }) {
           >
 {isSaving || isWritePending || isTransactionLoading ? 
               (isTransactionLoading ? 'Confirming...' : 'Saving...') : 
-              'Save (0.01 MON)'}
+              'Save'}
           </button>
         </div>
       </div>
