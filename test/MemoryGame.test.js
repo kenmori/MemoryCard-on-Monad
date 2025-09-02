@@ -60,7 +60,7 @@ describe("MemoryGame", function () {
 
   describe("Score Management", function () {
     beforeEach(async function () {
-      await memoryGame.connect(player1).registerPlayer();
+      // registerPlayer not needed - updateProgress auto-registers
     });
 
     it("Should update player score with sufficient payment", async function () {
@@ -106,7 +106,8 @@ describe("MemoryGame", function () {
 
   describe("Player Queries", function () {
     it("Should return current player data", async function () {
-      await memoryGame.connect(player1).registerPlayer();
+      const payment = ethers.parseEther("0.01");
+      await memoryGame.connect(player1).updateProgress(0, { value: payment });
       
       const [level, score, bestScore] = await memoryGame.connect(player1).getCurrentPlayer();
       expect(level).to.equal(1);
@@ -123,16 +124,13 @@ describe("MemoryGame", function () {
 
   describe("Leaderboard", function () {
     beforeEach(async function () {
-      await memoryGame.connect(player1).registerPlayer();
-      await memoryGame.connect(player2).registerPlayer();
-      
       const payment = ethers.parseEther("0.01");
       await memoryGame.connect(player1).updateProgress(800, { value: payment });
       await memoryGame.connect(player2).updateProgress(600, { value: payment });
     });
 
     it("Should return leaderboard in descending order", async function () {
-      const [addresses, scores] = await memoryGame.getLeaderboard(2);
+      const [addresses, levels, scores] = await memoryGame.getLeaderboard(2);
       
       expect(addresses[0]).to.equal(player1.address);
       expect(addresses[1]).to.equal(player2.address);
@@ -141,7 +139,7 @@ describe("MemoryGame", function () {
     });
 
     it("Should limit results correctly", async function () {
-      const [addresses, scores] = await memoryGame.getLeaderboard(1);
+      const [addresses, levels, scores] = await memoryGame.getLeaderboard(1);
       
       expect(addresses.length).to.equal(1);
       expect(scores.length).to.equal(1);

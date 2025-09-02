@@ -6,8 +6,6 @@ function SaveProgressModal({ isOpen, onClose, score, level, onSaveComplete }) {
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const { 
     updateProgress, 
-    isPlayerRegistered, 
-    registerPlayer, 
     playerData, 
     isWritePending, 
     writeError,
