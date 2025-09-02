@@ -38,8 +38,21 @@ contract MemoryGame {
         emit PlayerRegistered(msg.sender);
     }
     
-    function updateProgress(uint256 _score) external payable playerExists {
+    function updateProgress(uint256 _score) external payable {
         require(msg.value >= 0.01 ether, "Insufficient payment to save progress");
+        
+        // 未登録プレイヤーは自動登録
+        if (!players[msg.sender].exists) {
+            players[msg.sender] = Player({
+                level: 1,
+                score: 0,
+                bestScore: 0,
+                lastPlayedAt: block.timestamp,
+                exists: true
+            });
+            playerAddresses.push(msg.sender);
+            emit PlayerRegistered(msg.sender);
+        }
         
         Player storage player = players[msg.sender];
         player.score = _score;

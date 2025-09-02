@@ -33,10 +33,7 @@ function SaveProgressModal({ isOpen, onClose, score, level, onSaveComplete }) {
     try {
       setIsSaving(true);
       
-      if (!isPlayerRegistered) {
-        await registerPlayer();
-      }
-      
+      // updateProgressで自動登録されるため、registerPlayerは不要
       await updateProgress(score);
       // トランザクション完了はuseEffectで監視
     } catch (error) {
